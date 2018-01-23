@@ -11,9 +11,10 @@ import UIKit
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        let end_time = "2018-01-23 21:29:08"
+        let end_time = "2018-01-24 12:16:00"
 
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT:0)

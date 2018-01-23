@@ -123,7 +123,7 @@ class WYLTimeClock: UIView {
         var unit:Set<Calendar.Component> = [.day,.hour,.minute,.second]
         commponent = calendar.dateComponents(unit, from: dateCopy!, to: endDate!)
         
-        var x: CGFloat = kRealValue() * 6.7 + 2
+        var x: CGFloat = kRealValue() * 8.5
         var y: CGFloat = kRealValue() * 31.7
         
         if hourReverseTenDigitTop == nil{
@@ -163,12 +163,24 @@ class WYLTimeClock: UIView {
         let secondTenDigit = commponent.second! / 10
         let minuteSingleDigit = commponent.minute! % 10
         let minuteTenDigit = commponent.minute! / 10
-//        let hourSingleDigit = commponent.hour! % 10
-//        let hourTenDigit = commponent.hour! / 10
+        let hourSingleDigit = commponent.hour! % 10
+        let hourTenDigit = commponent.hour! / 10
         
         UIView.animate(withDuration: 0.7, animations: {
-            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
-                
+            
+            if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                self.hourTenAnimation()
+                self.hourSingleAnimation()
+                self.minuteTenAnimation()
+                self.minuteSingleAnimation()
+                self.secondSingleAnimation()
+                self.secondTenAnimation()
+            }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
+                self.hourSingleAnimation()
+                self.minuteTenAnimation()
+                self.minuteSingleAnimation()
+                self.secondSingleAnimation()
+                self.secondTenAnimation()
             }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
                 self.minuteTenAnimation()
                 self.minuteSingleAnimation()
@@ -187,8 +199,19 @@ class WYLTimeClock: UIView {
             
         }) { (finish) in
             
-            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
-                
+            if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                self.hourTenAnimationFinish(commponent: commponent)
+                self.hourSingleAnimationFinish(commponent: commponent)
+                self.minuteTenAnimationFinish(commponent: commponent)
+                self.minuteSingleAnimationFinish(commponent: commponent)
+                self.secondSingleAnimationFinish(commponent: commponent)
+                self.secondTenAnimationFinish(commponent: commponent)
+            }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
+                self.hourSingleAnimationFinish(commponent: commponent)
+                self.minuteTenAnimationFinish(commponent: commponent)
+                self.minuteSingleAnimationFinish(commponent: commponent)
+                self.secondSingleAnimationFinish(commponent: commponent)
+                self.secondTenAnimationFinish(commponent: commponent)
             }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
                 self.minuteTenAnimationFinish(commponent: commponent)
                 self.minuteSingleAnimationFinish(commponent: commponent)
@@ -217,6 +240,108 @@ class WYLTimeClock: UIView {
             self.perform(#selector(self.setUpTimeLabel), with: nil, afterDelay: time)
             
         }
+        
+    }
+    
+    // MARK:动画-hour
+    func hourTenAnimation(){
+        
+        let transform = CATransform3DIdentity
+        
+        self.hourReverseTenDigitTop?.blackView?.alpha = 0.0
+        
+        self.hourTenDigitTop?.layer.transform.m34 = 1.0 / -500;
+        self.hourTenDigitTop?.layer.transform = CATransform3DRotate(transform, .pi/1, 1, 0, 0)
+        self.hourTenDigitTop?.blackView?.alpha = 1.0
+        self.hourTenDigitTop?.alpha = 0.0
+        
+        self.hourReverseTenDigitBottom?.layer.transform.m34 = 1.0 / -500;
+        self.hourReverseTenDigitBottom?.layer.transform = CATransform3DRotate(transform, .pi/1, 1, 0, 0)
+        self.hourReverseTenDigitBottom?.alpha = 1.0
+        
+        self.hourTenDigitBottom?.blackView?.alpha = 1.0
+    }
+    
+    func hourTenAnimationFinish(commponent : DateComponents){
+        
+        let transform = CATransform3DIdentity
+        
+        let hourTenDigit = commponent.hour! / 10
+        
+        let num: Int = (hourTenDigit - 1) >= 0 ? (hourTenDigit - 1) : 2
+        
+        //no.1 先把被盖住的bottom放到前面,改变图标
+        self.hourTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.hourTenDigitBottom?.blackView?.alpha = 0.0
+        self.bringSubview(toFront: self.hourTenDigitBottom!)
+        
+        //no.2 把翻转过来的2个view放到后面,重新翻转回去
+        self.sendSubview(toBack: self.hourReverseTenDigitBottom!)
+        self.sendSubview(toBack: self.hourReverseTenDigitTop!)
+        
+        let numNext = (num - 1) >= 0 ? (num - 1) : 2
+        
+        self.hourTenDigitTop?.blackView?.alpha = 0.0
+        self.hourTenDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.hourTenDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
+        self.hourTenDigitTop?.alpha = 1.0
+        
+        self.hourReverseTenDigitBottom?.alpha = 0.0
+        self.hourReverseTenDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
+        self.hourReverseTenDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        
+        self.hourReverseTenDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        
+    }
+    
+    func hourSingleAnimationFinish(commponent : DateComponents){
+        
+        let transform = CATransform3DIdentity
+        
+        let hourSingleDigit = commponent.hour! % 10
+        
+        let num: Int = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 9
+        
+        //no.1 先把被盖住的bottom放到前面,改变图标
+        self.hourSingleDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.hourSingleDigitBottom?.blackView?.alpha = 0.0
+        self.bringSubview(toFront: self.hourSingleDigitBottom!)
+        
+        //no.2 把翻转过来的2个view放到后面,重新翻转回去
+        self.sendSubview(toBack: self.hourReverseSingleDigitBottom!)
+        self.sendSubview(toBack: self.hourReverseSingleDigitTop!)
+        
+        let numNext = (num - 1) >= 0 ? (num - 1) : 9
+        
+        self.hourSingleDigitTop?.blackView?.alpha = 0.0
+        self.hourSingleDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.hourSingleDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
+        self.hourSingleDigitTop?.alpha = 1.0
+        
+        self.hourReverseSingleDigitBottom?.alpha = 0.0
+        self.hourReverseSingleDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
+        self.hourReverseSingleDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        
+        self.hourReverseSingleDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        
+    }
+    
+    func hourSingleAnimation(){
+        
+        let transform = CATransform3DIdentity
+        
+        self.hourReverseSingleDigitTop?.blackView?.alpha = 0.0
+        
+        self.hourSingleDigitTop?.layer.transform.m34 = 1.0 / -500;
+        self.hourSingleDigitTop?.layer.transform = CATransform3DRotate(transform, .pi/1, 1, 0, 0)
+        self.hourSingleDigitTop?.blackView?.alpha = 1.0
+        self.hourSingleDigitTop?.alpha = 0.0
+        
+        self.hourReverseSingleDigitBottom?.layer.transform.m34 = 1.0 / -500;
+        self.hourReverseSingleDigitBottom?.layer.transform = CATransform3DRotate(transform, .pi/1, 1, 0, 0)
+        self.hourReverseSingleDigitBottom?.alpha = 1.0
+        
+        self.hourSingleDigitBottom?.blackView?.alpha = 1.0
         
     }
     
@@ -524,7 +649,7 @@ class WYLTimeClock: UIView {
         if minuteReverseTenDigitBottom == nil{
             minuteReverseTenDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x - ( 25 / 2.0), y: y + (18 / 2.0), width: 25, height: 18), top: true)
             minuteReverseTenDigitBottom?.alpha = 0.0
-            minuteReverseTenDigitBottom?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.00)
+            minuteReverseTenDigitBottom?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.0)
             self.addSubview(minuteReverseTenDigitBottom!)
         }
         minuteReverseTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom-reverse")
@@ -585,32 +710,35 @@ class WYLTimeClock: UIView {
         var x:CGFloat = xBase
         let y:CGFloat = yBase
         
-        var num: Int = (hourTenDigit - 1) >= 0 ? (hourTenDigit - 1) : 9
+        var num: Int = (hourTenDigit - 1) >= 0 ? (hourTenDigit - 1) : 2
         
         if hourReverseTenDigitTop == nil {
-            hourReverseTenDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 18.5), top: true)
+            hourReverseTenDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25, height: 18), top: true)
+            hourReverseTenDigitTop?.blackView?.alpha = 1.0
             self.addSubview(hourReverseTenDigitTop!)
         }
         hourReverseTenDigitTop?.image = UIImage.init(named: "\(num)-top")
         
         if hourReverseTenDigitBottom == nil {
-            hourReverseTenDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 19.5), top: true)
+            hourReverseTenDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x - ( 25 / 2.0), y: y + (18 / 2.0), width: 25, height: 18), top: true)
+            hourReverseTenDigitBottom?.alpha = 0.0
+            hourReverseTenDigitBottom?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.0)
             self.addSubview(hourReverseTenDigitBottom!)
         }
         hourReverseTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom-reverse")
         
         if hourTenDigitTop == nil {
-            hourTenDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 18.5), top: true)
+            hourTenDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x - ( 25 / 2.0), y: y + (18 / 2.0), width: 25, height: 18), top: true)
+            hourTenDigitTop?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.0)
             self.addSubview(hourTenDigitTop!)
         }
         hourTenDigitTop?.image = UIImage.init(named: "\(hourTenDigit)-top")
         
         if hourTenDigitBottom == nil{
-            hourTenDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y + 18, width: 25.5, height: 19.5), top: false)
+            hourTenDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y + 18, width: 25, height: 18), top: false)
             self.addSubview(hourTenDigitBottom!)
         }
         hourTenDigitBottom?.image = UIImage.init(named: "\(hourTenDigit)-bottom")
-        
         
         //-----------------
         
@@ -618,25 +746,29 @@ class WYLTimeClock: UIView {
         x = (hourReverseTenDigitTop?.frame.origin.x)! + (hourReverseTenDigitTop?.frame.size.width)! + 3
         
         if hourReverseSingleDigitTop == nil{
-            hourReverseSingleDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 18.5), top: true)
+            hourReverseSingleDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25, height: 18), top: true)
+            hourReverseSingleDigitTop?.blackView?.alpha = 1.0
             self.addSubview(hourReverseSingleDigitTop!)
         }
         hourReverseSingleDigitTop?.image = UIImage.init(named: "\(num)-top")
         
         if hourReverseSingleDigitBottom == nil{
-            hourReverseSingleDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 19.5), top: true)
+            hourReverseSingleDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x - ( 25 / 2.0), y: y + (18 / 2.0), width: 25, height: 18), top: true)
+            hourReverseSingleDigitBottom?.alpha = 0.0
+            hourReverseSingleDigitBottom?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.0)
             self.addSubview(hourReverseSingleDigitBottom!)
         }
         hourReverseSingleDigitBottom?.image = UIImage.init(named: "\(num)-bottom-reverse")
         
         if hourSingleDigitTop == nil {
-            hourSingleDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x, y: y, width: 25.5, height: 18.5), top: true)
+            hourSingleDigitTop = WYLClockLabel.init(frame: CGRect.init(x: x - ( 25 / 2.0), y: y + (18 / 2.0), width: 25, height: 18), top: true)
+            hourSingleDigitTop?.layer.anchorPoint = CGPoint.init(x: 0.0, y: 1.0)
             self.addSubview(hourSingleDigitTop!)
         }
         hourSingleDigitTop?.image = UIImage.init(named: "\(hourSingleDigit)-top")
         
         if hourSingleDigitBottom == nil {
-            hourSingleDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y + 18, width: 25.5, height: 19.5), top: false)
+            hourSingleDigitBottom = WYLClockLabel.init(frame: CGRect.init(x: x, y: y + 18, width: 25, height: 18), top: false)
             self.addSubview(hourSingleDigitBottom!)
         }
         hourSingleDigitBottom?.image = UIImage.init(named: "\(hourSingleDigit)-bottom")
@@ -667,15 +799,15 @@ class WYLTimeClock: UIView {
         
         day = UILabel.init()
         day?.textAlignment = .center
-        day?.font = UIFont.boldSystemFont(ofSize: 14)
+        day?.font = UIFont.boldSystemFont(ofSize: 18)
         day?.textColor = UIColor.init(colorWithHexValue: 0x59616A)
         self.addSubview(day!)
         
         day?.snp.makeConstraints({ (maker) in
-            maker.top.equalTo(weakSelf!).offset(kRealValue() * 12.7)
+            maker.top.equalTo(weakSelf!).offset(kRealValue() * 11.3)
             maker.left.equalTo(weakSelf!).offset(0)
             maker.width.equalTo(frame.size.width)
-            maker.height.equalTo(20)
+            maker.height.equalTo(30)
         })
         
         dateLabel = UILabel.init()
