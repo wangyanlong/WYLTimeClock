@@ -162,13 +162,14 @@ class WYLTimeClock: UIView {
         let secondSingleDigit = commponent.second! % 10
         let secondTenDigit = commponent.second! / 10
         let minuteSingleDigit = commponent.minute! % 10
-//        let minuteTenDigit = commponent.minute! / 10
+        let minuteTenDigit = commponent.minute! / 10
 //        let hourSingleDigit = commponent.hour! % 10
 //        let hourTenDigit = commponent.hour! / 10
         
-        UIView.animate(withDuration: 0.5, animations: {
-
-            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
+        UIView.animate(withDuration: 0.7, animations: {
+            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
+                
+            }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
                 self.minuteTenAnimation()
                 self.minuteSingleAnimation()
                 self.secondSingleAnimation()
@@ -186,7 +187,9 @@ class WYLTimeClock: UIView {
             
         }) { (finish) in
             
-            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
+            if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
+                
+            }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
                 self.minuteTenAnimationFinish(commponent: commponent)
                 self.minuteSingleAnimationFinish(commponent: commponent)
                 self.secondSingleAnimationFinish(commponent: commponent)
@@ -506,7 +509,7 @@ class WYLTimeClock: UIView {
         var x:CGFloat = xBase
         var y:CGFloat = yBase
         
-        var num: Int = (minuteTenDigit - 1) >= 0 ? (minuteTenDigit - 1) : 9
+        var num: Int = (minuteTenDigit - 1) >= 0 ? (minuteTenDigit - 1) : 5
         
         x = (hourReverseSingleDigitTop?.frame.origin.x)! + (hourReverseSingleDigitTop?.frame.size.width)! + 10.4
         y = kRealValue() * 31.7
