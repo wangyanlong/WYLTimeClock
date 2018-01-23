@@ -11,7 +11,6 @@ import UIKit
 class WYLClockLabel: UIImageView {
 
     var blackView: UIView?
-    var labelNum: Int?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,9 +24,7 @@ class WYLClockLabel: UIImageView {
     convenience init(frame: CGRect, top: Bool) {
         
         self.init(frame: frame)
-        
-//        self.contentMode = .scaleAspectFit
-        
+                
         blackView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         blackView?.backgroundColor = UIColor.init(colorWithHexValue: 0x404146)
         if top {

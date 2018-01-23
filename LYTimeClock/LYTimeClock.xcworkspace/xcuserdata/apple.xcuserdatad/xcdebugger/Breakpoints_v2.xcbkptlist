@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LYTimeClock/WYLTimeClock.swift"
-            timestampString = "538388143.704602"
+            timestampString = "538393617.2960041"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "setUpTimeLabel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,12 +26,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LYTimeClock/WYLTimeClock.swift"
-            timestampString = "538388143.704717"
+            timestampString = "538393617.296384"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "hourSingleAnimationFinish(commponent:across:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LYTimeClock/WYLTimeClock.swift"
+            timestampString = "538393617.296451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
             endingLineNumber = "304"
-            landmarkName = "hourSingleAnimationFinish(commponent:)"
+            landmarkName = "hourTenAnimationFinish(commponent:across:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

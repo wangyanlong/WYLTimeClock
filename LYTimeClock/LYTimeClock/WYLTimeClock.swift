@@ -168,7 +168,14 @@ class WYLTimeClock: UIView {
         
         UIView.animate(withDuration: 0.7, animations: {
             
-            if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+            if (hourTenDigit - 1) < 0 && (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                self.hourTenAnimation()
+                self.hourSingleAnimation()
+                self.minuteTenAnimation()
+                self.minuteSingleAnimation()
+                self.secondSingleAnimation()
+                self.secondTenAnimation()
+            }else if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
                 self.hourTenAnimation()
                 self.hourSingleAnimation()
                 self.minuteTenAnimation()
@@ -199,33 +206,49 @@ class WYLTimeClock: UIView {
             
         }) { (finish) in
             
-            if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
-                self.hourTenAnimationFinish(commponent: commponent)
-                self.hourSingleAnimationFinish(commponent: commponent)
-                self.minuteTenAnimationFinish(commponent: commponent)
-                self.minuteSingleAnimationFinish(commponent: commponent)
-                self.secondSingleAnimationFinish(commponent: commponent)
-                self.secondTenAnimationFinish(commponent: commponent)
+            if (hourTenDigit - 1) < 0 && (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                
+                var calendar = Calendar.current
+                calendar.timeZone = self.timeZone
+                
+                let unit:Set<Calendar.Component> = [.day,.hour,.minute,.second]
+                commponent = calendar.dateComponents(unit, from: self.localDate(date: Date.init()), to: self.endDate!)
+                self.day!.text = "剩下\(commponent.day!)天"
+                
+                self.hourTenAnimationFinish(commponent: commponent,across: true)
+                self.hourSingleAnimationFinish(commponent: commponent,across: true)
+                self.minuteTenAnimationFinish(commponent: commponent,across: true)
+                self.minuteSingleAnimationFinish(commponent: commponent,across: true)
+                self.secondSingleAnimationFinish(commponent: commponent,across: true)
+                self.secondTenAnimationFinish(commponent: commponent,across: true)
+                
+            }else if (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                self.hourTenAnimationFinish(commponent: commponent,across: false)
+                self.hourSingleAnimationFinish(commponent: commponent,across: false)
+                self.minuteTenAnimationFinish(commponent: commponent,across: false)
+                self.minuteSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondTenAnimationFinish(commponent: commponent,across: false)
             }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0 {
-                self.hourSingleAnimationFinish(commponent: commponent)
-                self.minuteTenAnimationFinish(commponent: commponent)
-                self.minuteSingleAnimationFinish(commponent: commponent)
-                self.secondSingleAnimationFinish(commponent: commponent)
-                self.secondTenAnimationFinish(commponent: commponent)
+                self.hourSingleAnimationFinish(commponent: commponent,across: false)
+                self.minuteTenAnimationFinish(commponent: commponent,across: false)
+                self.minuteSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondTenAnimationFinish(commponent: commponent,across: false)
             }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0{
-                self.minuteTenAnimationFinish(commponent: commponent)
-                self.minuteSingleAnimationFinish(commponent: commponent)
-                self.secondSingleAnimationFinish(commponent: commponent)
-                self.secondTenAnimationFinish(commponent: commponent)
+                self.minuteTenAnimationFinish(commponent: commponent,across: false)
+                self.minuteSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondTenAnimationFinish(commponent: commponent,across: false)
             }else if (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 {
-                self.minuteSingleAnimationFinish(commponent: commponent)
-                self.secondSingleAnimationFinish(commponent: commponent)
-                self.secondTenAnimationFinish(commponent: commponent)
+                self.minuteSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondTenAnimationFinish(commponent: commponent,across: false)
             }else if (secondSingleDigit - 1) < 0{
-                self.secondSingleAnimationFinish(commponent: commponent)
-                self.secondTenAnimationFinish(commponent: commponent)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
+                self.secondTenAnimationFinish(commponent: commponent,across: false)
             }else{
-                self.secondSingleAnimationFinish(commponent: commponent)
+                self.secondSingleAnimationFinish(commponent: commponent,across: false)
             }
 
             unit = [.nanosecond]
@@ -236,7 +259,6 @@ class WYLTimeClock: UIView {
             
             commponent = calendar.dateComponents(unit, from:dateLocal , to: nextDate)
             let time = Double(commponent.nanosecond!) / 1000000000
-            print(time)
             self.perform(#selector(self.setUpTimeLabel), with: nil, afterDelay: time)
             
         }
@@ -262,16 +284,22 @@ class WYLTimeClock: UIView {
         self.hourTenDigitBottom?.blackView?.alpha = 1.0
     }
     
-    func hourTenAnimationFinish(commponent : DateComponents){
+    func hourTenAnimationFinish(commponent: DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let hourTenDigit = commponent.hour! / 10
         
-        let num: Int = (hourTenDigit - 1) >= 0 ? (hourTenDigit - 1) : 2
+        var num: Int?
+        
+        if across {
+            num = 2
+        }else{
+            num = (hourTenDigit - 1) >= 0 ? (hourTenDigit - 1) : 2
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.hourTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.hourTenDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.hourTenDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.hourTenDigitBottom!)
         
@@ -279,31 +307,42 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.hourReverseTenDigitBottom!)
         self.sendSubview(toBack: self.hourReverseTenDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 2
+        var numNext: Int?
+        if across{
+            numNext = 1
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 2
+        }
         
         self.hourTenDigitTop?.blackView?.alpha = 0.0
-        self.hourTenDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.hourTenDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.hourTenDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.hourTenDigitTop?.alpha = 1.0
         
         self.hourReverseTenDigitBottom?.alpha = 0.0
         self.hourReverseTenDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.hourReverseTenDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.hourReverseTenDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.hourReverseTenDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.hourReverseTenDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
         
     }
     
-    func hourSingleAnimationFinish(commponent : DateComponents){
+    func hourSingleAnimationFinish(commponent : DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let hourSingleDigit = commponent.hour! % 10
         
-        let num: Int = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 9
+        var num: Int?
+        
+        if across {
+            num = 3
+        }else{
+            num = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 9
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.hourSingleDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.hourSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.hourSingleDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.hourSingleDigitBottom!)
         
@@ -311,18 +350,23 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.hourReverseSingleDigitBottom!)
         self.sendSubview(toBack: self.hourReverseSingleDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 9
+        var numNext: Int?
+        if across {
+            numNext = 2
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 9
+        }
         
         self.hourSingleDigitTop?.blackView?.alpha = 0.0
-        self.hourSingleDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.hourSingleDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.hourSingleDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.hourSingleDigitTop?.alpha = 1.0
         
         self.hourReverseSingleDigitBottom?.alpha = 0.0
         self.hourReverseSingleDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.hourReverseSingleDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.hourReverseSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.hourReverseSingleDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.hourReverseSingleDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
         
     }
     
@@ -365,16 +409,21 @@ class WYLTimeClock: UIView {
         
     }
     
-    func minuteTenAnimationFinish(commponent : DateComponents){
+    func minuteTenAnimationFinish(commponent : DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let minuteTenDigit = commponent.minute! / 10
         
-        let num: Int = (minuteTenDigit - 1) >= 0 ? (minuteTenDigit - 1) : 5
+        var num: Int?
+        if across{
+            num = 5
+        }else{
+            num = (minuteTenDigit - 1) >= 0 ? (minuteTenDigit - 1) : 5
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.minuteTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.minuteTenDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.minuteTenDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.minuteTenDigitBottom!)
         
@@ -382,31 +431,41 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.minuteReverseTenDigitBottom!)
         self.sendSubview(toBack: self.minuteReverseTenDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 5
+        var numNext: Int?
+        if across {
+            numNext = 4
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 5
+        }
         
         self.minuteTenDigitTop?.blackView?.alpha = 0.0
-        self.minuteTenDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.minuteTenDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.minuteTenDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.minuteTenDigitTop?.alpha = 1.0
         
         self.minuteReverseTenDigitBottom?.alpha = 0.0
         self.minuteReverseTenDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.minuteReverseTenDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.minuteReverseTenDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.minuteReverseTenDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.minuteReverseTenDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
         
     }
     
-    func minuteSingleAnimationFinish(commponent : DateComponents){
+    func minuteSingleAnimationFinish(commponent : DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let minuteSingleDigit = commponent.minute! % 10
         
-        let num: Int = (minuteSingleDigit - 1) >= 0 ? (minuteSingleDigit - 1) : 9
+        var num: Int?
+        if across {
+            num = 9
+        }else{
+            num = (minuteSingleDigit - 1) >= 0 ? (minuteSingleDigit - 1) : 9
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.minuteSingleDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.minuteSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.minuteSingleDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.minuteSingleDigitBottom!)
         
@@ -414,18 +473,23 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.minuteReverseSingleDigitBottom!)
         self.sendSubview(toBack: self.minuteReverseSingleDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 9
+        var numNext: Int?
+        if across {
+            numNext = 8
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 9
+        }
         
         self.minuteSingleDigitTop?.blackView?.alpha = 0.0
-        self.minuteSingleDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.minuteSingleDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.minuteSingleDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.minuteSingleDigitTop?.alpha = 1.0
         
         self.minuteReverseSingleDigitBottom?.alpha = 0.0
         self.minuteReverseSingleDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.minuteReverseSingleDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.minuteReverseSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.minuteReverseSingleDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.minuteReverseSingleDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
     }
     
     func minuteSingleAnimation(){
@@ -467,16 +531,21 @@ class WYLTimeClock: UIView {
         
     }
     
-    func secondTenAnimationFinish(commponent : DateComponents){
+    func secondTenAnimationFinish(commponent : DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let secondTenDigit = commponent.second! / 10
         
-        let num: Int = (secondTenDigit - 1) >= 0 ? (secondTenDigit - 1) : 5
+        var num: Int?
+        if across {
+            num = 5
+        }else{
+            num = (secondTenDigit - 1) >= 0 ? (secondTenDigit - 1) : 5
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.secondTenDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.secondTenDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.secondTenDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.secondTenDigitBottom!)
         
@@ -484,30 +553,40 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.secondReverseTenDigitBottom!)
         self.sendSubview(toBack: self.secondReverseTenDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 5
+        var numNext: Int?
+        if across {
+            numNext = 4
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 5
+        }
         
         self.secondTenDigitTop?.blackView?.alpha = 0.0
-        self.secondTenDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.secondTenDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.secondTenDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.secondTenDigitTop?.alpha = 1.0
         
         self.secondReverseTenDigitBottom?.alpha = 0.0
         self.secondReverseTenDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.secondReverseTenDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.secondReverseTenDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.secondReverseTenDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.secondReverseTenDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
     }
     
-    func secondSingleAnimationFinish(commponent : DateComponents){
+    func secondSingleAnimationFinish(commponent : DateComponents, across: Bool){
         
         let transform = CATransform3DIdentity
         
         let secondSingleDigit = commponent.second! % 10
         
-        let num: Int = (secondSingleDigit - 1) >= 0 ? (secondSingleDigit - 1) : 9
+        var num: Int?
+        if across {
+            num = 9
+        }else{
+            num = (secondSingleDigit - 1) >= 0 ? (secondSingleDigit - 1) : 9
+        }
         
         //no.1 先把被盖住的bottom放到前面,改变图标
-        self.secondSingleDigitBottom?.image = UIImage.init(named: "\(num)-bottom")
+        self.secondSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: num!))-bottom")
         self.secondSingleDigitBottom?.blackView?.alpha = 0.0
         self.bringSubview(toFront: self.secondSingleDigitBottom!)
         
@@ -515,18 +594,23 @@ class WYLTimeClock: UIView {
         self.sendSubview(toBack: self.secondReverseSingleDigitBottom!)
         self.sendSubview(toBack: self.secondReverseSingleDigitTop!)
         
-        let numNext = (num - 1) >= 0 ? (num - 1) : 9
+        var numNext: Int?
+        if across {
+            numNext = 8
+        }else{
+            numNext = (num! - 1) >= 0 ? (num! - 1) : 9
+        }
         
         self.secondSingleDigitTop?.blackView?.alpha = 0.0
-        self.secondSingleDigitTop?.image = UIImage.init(named: "\(num)-top")
+        self.secondSingleDigitTop?.image = UIImage.init(named: "\(String(describing: num!))-top")
         self.secondSingleDigitTop?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
         self.secondSingleDigitTop?.alpha = 1.0
         
         self.secondReverseSingleDigitBottom?.alpha = 0.0
         self.secondReverseSingleDigitBottom?.layer.transform = CATransform3DRotate(transform, (.pi * -2) , 1, 0, 0)
-        self.secondReverseSingleDigitBottom?.image = UIImage.init(named: "\(numNext)-bottom-reverse")
+        self.secondReverseSingleDigitBottom?.image = UIImage.init(named: "\(String(describing: numNext!))-bottom-reverse")
         
-        self.secondReverseSingleDigitTop?.image = UIImage.init(named: "\(numNext)-top")
+        self.secondReverseSingleDigitTop?.image = UIImage.init(named: "\(String(describing: numNext!))-top")
     }
     
     func secondSingleAnimation(){
@@ -742,7 +826,12 @@ class WYLTimeClock: UIView {
         
         //-----------------
         
-        num = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 9
+        if (hourTenDigit - 1) < 0 {
+            num = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 3
+        }else{
+            num = (hourSingleDigit - 1) >= 0 ? (hourSingleDigit - 1) : 9
+        }
+        
         x = (hourReverseTenDigitTop?.frame.origin.x)! + (hourReverseTenDigitTop?.frame.size.width)! + 3
         
         if hourReverseSingleDigitTop == nil{
