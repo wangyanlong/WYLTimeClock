@@ -12,10 +12,9 @@
 		1821C72D2011C49400B56C31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1821C72B2011C49400B56C31 /* Main.storyboard */; };
 		1821C72F2011C49400B56C31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1821C72E2011C49400B56C31 /* Assets.xcassets */; };
 		1821C7322011C49400B56C31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1821C7302011C49400B56C31 /* LaunchScreen.storyboard */; };
-		1821C73A2011C51300B56C31 /* WYLTimeClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821C7392011C51300B56C31 /* WYLTimeClock.swift */; };
 		1821C73C2011DE0100B56C31 /* WYLDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821C73B2011DE0100B56C31 /* WYLDefine.swift */; };
-		1821C73E2011E1F000B56C31 /* WYLTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821C73D2011E1F000B56C31 /* WYLTimeView.swift */; };
-		18C5BC552013656D006A5AA1 /* WYLClockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C5BC542013656D006A5AA1 /* WYLClockLabel.swift */; };
+		18E9BB7820173D9300C824F7 /* WYLClockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9BB7620173D9200C824F7 /* WYLClockLabel.swift */; };
+		18E9BB7920173D9300C824F7 /* WYLTimeClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E9BB7720173D9200C824F7 /* WYLTimeClock.swift */; };
 		C23FFAFD8442659A505E8C93 /* Pods_LYTimeClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9D70C1D35E2A4201A2282F /* Pods_LYTimeClock.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,10 +26,9 @@
 		1821C72E2011C49400B56C31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1821C7312011C49400B56C31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1821C7332011C49400B56C31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1821C7392011C51300B56C31 /* WYLTimeClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYLTimeClock.swift; sourceTree = "<group>"; };
 		1821C73B2011DE0100B56C31 /* WYLDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYLDefine.swift; sourceTree = "<group>"; };
-		1821C73D2011E1F000B56C31 /* WYLTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYLTimeView.swift; sourceTree = "<group>"; };
-		18C5BC542013656D006A5AA1 /* WYLClockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYLClockLabel.swift; sourceTree = "<group>"; };
+		18E9BB7620173D9200C824F7 /* WYLClockLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYLClockLabel.swift; sourceTree = "<group>"; };
+		18E9BB7720173D9200C824F7 /* WYLTimeClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WYLTimeClock.swift; sourceTree = "<group>"; };
 		38B61E936D882F151FE87414 /* Pods-LYTimeClock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LYTimeClock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LYTimeClock/Pods-LYTimeClock.debug.xcconfig"; sourceTree = "<group>"; };
 		CFBAC34C81EE3962B256B570 /* Pods-LYTimeClock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LYTimeClock.release.xcconfig"; path = "Pods/Target Support Files/Pods-LYTimeClock/Pods-LYTimeClock.release.xcconfig"; sourceTree = "<group>"; };
 		FB9D70C1D35E2A4201A2282F /* Pods_LYTimeClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LYTimeClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,18 +67,25 @@
 		1821C7262011C49400B56C31 /* LYTimeClock */ = {
 			isa = PBXGroup;
 			children = (
-				1821C73B2011DE0100B56C31 /* WYLDefine.swift */,
 				1821C7272011C49400B56C31 /* AppDelegate.swift */,
 				1821C7292011C49400B56C31 /* ViewController.swift */,
 				1821C72B2011C49400B56C31 /* Main.storyboard */,
-				1821C7392011C51300B56C31 /* WYLTimeClock.swift */,
-				1821C73D2011E1F000B56C31 /* WYLTimeView.swift */,
-				18C5BC542013656D006A5AA1 /* WYLClockLabel.swift */,
+				1821C73B2011DE0100B56C31 /* WYLDefine.swift */,
+				18E9BB7520173D9200C824F7 /* WYLTimeClock */,
 				1821C72E2011C49400B56C31 /* Assets.xcassets */,
 				1821C7302011C49400B56C31 /* LaunchScreen.storyboard */,
 				1821C7332011C49400B56C31 /* Info.plist */,
 			);
 			path = LYTimeClock;
+			sourceTree = "<group>";
+		};
+		18E9BB7520173D9200C824F7 /* WYLTimeClock */ = {
+			isa = PBXGroup;
+			children = (
+				18E9BB7620173D9200C824F7 /* WYLClockLabel.swift */,
+				18E9BB7720173D9200C824F7 /* WYLTimeClock.swift */,
+			);
+			path = WYLTimeClock;
 			sourceTree = "<group>";
 		};
 		1FA61372CCF3BF27F4AF46C7 /* Pods */ = {
@@ -229,11 +234,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1821C73A2011C51300B56C31 /* WYLTimeClock.swift in Sources */,
-				1821C73E2011E1F000B56C31 /* WYLTimeView.swift in Sources */,
 				1821C73C2011DE0100B56C31 /* WYLDefine.swift in Sources */,
 				1821C72A2011C49400B56C31 /* ViewController.swift in Sources */,
-				18C5BC552013656D006A5AA1 /* WYLClockLabel.swift in Sources */,
+				18E9BB7920173D9300C824F7 /* WYLTimeClock.swift in Sources */,
+				18E9BB7820173D9300C824F7 /* WYLClockLabel.swift in Sources */,
 				1821C7282011C49400B56C31 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

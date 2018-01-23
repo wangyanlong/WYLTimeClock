@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let end_time = "2018-01-25 17:47:10"
+        let end_time = "2018-01-25 18:52:10"
 
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
@@ -53,6 +53,10 @@ class ViewController: UIViewController {
         let str_second = NSString(format: "%02ld", seconds%60)
         let format_time = NSString(format: "%@:%@:%@:%@",str_day,str_hour,str_minute,str_second)
         return format_time as String
+    }
+   
+    deinit {
+        print("dealloc")
     }
     
     override func didReceiveMemoryWarning() {

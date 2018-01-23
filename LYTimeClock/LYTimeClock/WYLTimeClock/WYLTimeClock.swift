@@ -92,7 +92,7 @@ class WYLTimeClock: UIView {
     }
     
     deinit {
-        
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
     // MARK:核心方法-翻页动画
