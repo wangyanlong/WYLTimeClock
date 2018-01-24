@@ -105,7 +105,18 @@ class WYLTimeClock: UIView {
         
         if com < 0{
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(setUpTimeLabel), object: nil)
+            setUpStaticLabel()
             return
+        }else{
+            
+            let view = self.viewWithTag(3000)
+            if view != nil{
+                for i in 3000...3005{
+                    let view2 = self.viewWithTag(i)
+                    view2?.removeFromSuperview()
+                }
+            }
+            
         }
         
         if implement {
@@ -169,6 +180,7 @@ class WYLTimeClock: UIView {
         UIView.animate(withDuration: 0.7, animations: {
             
             if (hourTenDigit - 1) < 0 && (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+                
                 self.hourTenAnimation()
                 self.hourSingleAnimation()
                 self.minuteTenAnimation()
@@ -921,7 +933,64 @@ class WYLTimeClock: UIView {
         
         let unit:Set<Calendar.Component> = [.day,.hour,.minute,.second]
         commponent = calendar.dateComponents(unit, from: localDate(date: Date.init()), to: endDate!)
-        day?.text = "剩下\(commponent.day!)天"
+        let dayNum: Int = commponent.day!
+        if dayNum >= 0{
+            day?.text = "剩下\(dayNum)天"
+        }else{
+            day!.text = "已过期"
+        }
+        
+        var x: CGFloat = kRealValue() * 8.5
+        var y: CGFloat = kRealValue() * 31.7
+        
+        let hour1:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        hour1.image = UIImage.init(named: "ClockLabelNone")
+        hour1.tag = 3000
+        self.addSubview(hour1)
+        
+        x = hour1.frame.origin.x  + hour1.frame.size.width + 3
+        let hour2:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        hour2.image = UIImage.init(named: "ClockLabelNone")
+        hour2.tag = 3001
+        self.addSubview(hour2)
+        
+        
+        x = hour2.frame.origin.x + hour2.frame.size.width + 3
+        y = hour2.frame.origin.y + 10
+        setUpColon(x: x, y: y)
+        
+        x = hour2.frame.origin.x + hour2.frame.size.width + 10.4
+        y = kRealValue() * 31.7
+        
+        let minute1:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        minute1.tag = 3002
+        minute1.image = UIImage.init(named: "ClockLabelNone")
+        self.addSubview(minute1)
+        
+        x = minute1.frame.origin.x  + minute1.frame.size.width + 3
+        let minute2:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        minute2.image = UIImage.init(named: "ClockLabelNone")
+        minute2.tag = 3003
+        self.addSubview(minute2)
+        
+        x = minute2.frame.origin.x + minute2.frame.size.width + 3
+        y = minute2.frame.origin.y + 10
+        setUpColon(x: x, y: y)
+        
+        x = minute2.frame.origin.x + minute2.frame.size.width + 10.4
+        y = kRealValue() * 31.7
+        
+        let second1:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        second1.tag = 3004
+        second1.image = UIImage.init(named: "ClockLabelNone")
+        self.addSubview(second1)
+        
+        x = second1.frame.origin.x  + second1.frame.size.width + 3
+        let second2:UIImageView = UIImageView.init(frame: CGRect.init(x: x, y: y, width: 25, height: 36))
+        second2.tag = 3005
+        second2.image = UIImage.init(named: "ClockLabelNone")
+        self.addSubview(second2)
+        
     }
     
     // MARK:计算方法

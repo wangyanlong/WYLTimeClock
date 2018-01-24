@@ -14,7 +14,8 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let end_time = "2018-01-25 18:52:10"
+        //一定要大于现在的时间
+        let end_time = "2018-01-24 15:54:40"
 
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
 
         let clock: WYLTimeClock = WYLTimeClock.init(frame: CGRect.init(x: 100, y: 100, width: 227, height: 227), date: date!)
         clock.setUpStaticLabel()
-        clock.perform(#selector(clock.setUpTimeLabel), with: nil, afterDelay: 1.0)
+        clock.setUpTimeLabel()
         self.view.addSubview(clock)
         
         
