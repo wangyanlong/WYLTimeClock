@@ -101,11 +101,19 @@ class WYLTimeClock: UIView {
         
         dateCopy = localDate(date: Date.init())
 
-        let com = ComparisonDate(date1: endDate!, date2: dateCopy!)
+        var timeInterval:TimeInterval = dateCopy!.timeIntervalSince1970
+        timeInterval += 1
+        let nextDate: Date = Date.init(timeIntervalSince1970: timeInterval)
         
+        let com = ComparisonDate(date1: endDate!, date2: nextDate)
+
         if com < 0{
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(setUpTimeLabel), object: nil)
+            for i in self.subviews{
+                i.removeFromSuperview()
+            }
             setUpStaticLabel()
+            day?.text = "已过期"
             return
         }else{
             
@@ -124,9 +132,6 @@ class WYLTimeClock: UIView {
         }
         
         implement = true
-        
-        var timeInterval:TimeInterval = dateCopy!.timeIntervalSince1970
-        timeInterval += 1
 
         var calendar = Calendar.current
         calendar.timeZone = timeZone
@@ -180,6 +185,7 @@ class WYLTimeClock: UIView {
         UIView.animate(withDuration: 0.7, animations: {
             
             if (hourTenDigit - 1) < 0 && (hourSingleDigit - 1) < 0 && (secondTenDigit - 1) < 0 && (secondSingleDigit - 1) < 0 && (minuteSingleDigit - 1) < 0 && (minuteTenDigit - 1) < 0{
+
                 
                 self.hourTenAnimation()
                 self.hourSingleAnimation()
@@ -264,7 +270,6 @@ class WYLTimeClock: UIView {
             }
 
             unit = [.nanosecond]
-            let nextDate: Date = Date.init(timeIntervalSince1970: timeInterval)
             let dateLocal = self.localDate(date: Date.init())
             
             self.implement = false
@@ -933,12 +938,7 @@ class WYLTimeClock: UIView {
         
         let unit:Set<Calendar.Component> = [.day,.hour,.minute,.second]
         commponent = calendar.dateComponents(unit, from: localDate(date: Date.init()), to: endDate!)
-        let dayNum: Int = commponent.day!
-        if dayNum >= 0{
-            day?.text = "剩下\(dayNum)天"
-        }else{
-            day!.text = "已过期"
-        }
+        day?.text = "剩下\(commponent.day!)天"
         
         var x: CGFloat = kRealValue() * 8.5
         var y: CGFloat = kRealValue() * 31.7

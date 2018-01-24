@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //一定要大于现在的时间
-        let end_time = "2018-01-24 15:54:40"
+        let end_time = "2018-01-24 16:06:00"
 
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT:0)
